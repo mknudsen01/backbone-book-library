@@ -41,6 +41,15 @@ app.get('/api/books', function( request, response ){
     }
   });
 });
+app.get('/api/books/:id', function( request, response ) {
+  return BookModel.findById( request.params.id, function( err, book ) {
+    if( !err ) {
+      return response.send( book );
+    } else {
+      return console.log( err );
+    }
+  });
+});
 
 app.post( '/api/books', function( request, response ) {
   var book = new BookModel({
