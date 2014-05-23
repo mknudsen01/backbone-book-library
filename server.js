@@ -33,12 +33,28 @@ app.get('/api', function( request, response ) {
   response.send( 'Library API is running' );
 });
 app.get('/api/books', function( request, response ){
-  console.log(response);
   return BookModel.find( function( err, books ){
     if( !err ){
       return response.send( books );
     } else {
       return console.log( err );
+    }
+  });
+});
+
+app.post( '/api/books', function( request, response ) {
+  var book = new BookModel({
+    title: request.body.titele,
+    author: request.body.author,
+    releaseDate: request.body.releaseDate
+  });
+
+  return book.save( function( err ) {
+    if ( !err ) {
+      console.log('created');
+      return response.send( book );
+    } else {
+      console.log( err );
     }
   });
 });
